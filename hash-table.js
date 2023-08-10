@@ -38,13 +38,41 @@ class HashTable {
   }
 
   insertWithHashCollisions(key, value) {
-    // Your code here
+    const collision = new KeyValuePair(key, value)
+    const index = this.hashMod(key)
+    if(this.data[index]) {
+      collision.next = this.data[index]
+      this.data[index] = collision
+    } else {
+      this.data[index] = collision;
+
+
+    }
+    this.count++
   }
+
 
   insert(key, value) {
-    // Your code here
-  }
+    const collision = new KeyValuePair(key, value);
+    const index = this.hashMod(key);
 
+    if (this.data[index]) {
+        let current = this.data[index];
+        while (current) {
+            if (current.key === key) {
+                current.value = value;
+                return;
+            }
+            current = current.next;
+        }
+        collision.next = this.data[index];
+        this.data[index] = collision;
+    } else {
+        this.data[index] = collision; 
+    }
+
+    this.count++;
+  }
 }
 
 
